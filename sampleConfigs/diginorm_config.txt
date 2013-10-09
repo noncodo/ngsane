@@ -1,0 +1,51 @@
+########################################################################
+###
+### 	Author: 	Martin A. Smith, Garvan Institute, Darlinghurst NSW Australia
+###     Email: 		m.smith@garvan.org
+##
+## 		This will run digital normalisation on your input files by removing highly redundant
+## 		sequencing reads given their K-mer composition. This is highly recommended for very deep
+## 		data (e.g. > 300 million paired reads) and will speed up downstream analyses significantly. 
+## 		N.B. Digital normalisation will merge all your samples into one, which is the ideal protocol
+## 		for Trinity anyways. 
+##
+
+########################################################################
+#			NGSane specific variables    
+########################################################################
+RUNDIGINORM="1"
+## This sets the targeted level of sequencing coverage post-normalisation. 
+# Recommended >30 && <100
+TARGETCOVERAGE="50"
+#keep this? 
+TMP=/share/Temp 
+
+########################################################################
+#			Job parameters *** MANDATORY *** 
+########################################################################
+# USER should edit these accordingly:
+SOURCE=$(pwd)
+# which folder to run on (i.e. folders within fastq directory)
+declare -a DIR; DIR=( sample1 sample2 )
+
+# folder/task containing the data this task operates on
+INPUT_DIGINORM="fastq"
+# where to write the output
+OUT=$SOURCE
+# where to write the log files
+QOUT=$OUT/qout
+# read indicator immediately preceding the fastq file suffix
+READONE="_R1"
+READTWO="_R2"
+#Strand specific library type: (RF or FR) Use FR for Illumina TrueSeq; RF for dUTP method
+SS_LIBRARY_TYPE="RF"
+# fastq file suffix
+FASTQ="fq.gz"
+
+########################################################################
+#				Resources 
+########################################################################
+#WALLTIME_DIGINORM="8:00:00"		# optional on Wolfpack 
+#MEMORY_DIGINORM="100" 			#Should be high, ≥ 100G (check your server)
+#NCPU_DIGINORM="16" 				
+#NODES_DIGINORM="1"
